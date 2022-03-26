@@ -5,22 +5,40 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   Beranda,
   Lainnya,
-	Pembatalan,
-    PesananSaya
+  Pembatalan,
+  PesananSaya,
+  Rincian,
+  Pesanan,
 } from '../Page';
 
 const Stack = createNativeStackNavigator();
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Beranda" component={Beranda} options={{headerShown: false}}/>
-      <Tab.Screen name="PesananSaya" component={PesananSaya} options={{headerShown: false}} />
-      <Tab.Screen name="Pembatalan" component={Pembatalan} options={{headerShown: false}} />
-      <Tab.Screen name="Lainnya" component={Lainnya} options={{headerShown: false}}/>
+      <Tab.Screen
+        name="Beranda"
+        component={Beranda}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="PesananSaya"
+        component={PesananSaya}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Pembatalan"
+        component={Pembatalan}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Lainnya"
+        component={Lainnya}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 }
@@ -33,10 +51,10 @@ export default function Router() {
         options={{headerShown: false}}
       />
       <Stack.Screen
-      name="Beranda"
-      component={Beranda}
-      options={{headerShown: false}}
-    />
+        name="Beranda"
+        component={Beranda}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Lainnya"
         component={Lainnya}
@@ -51,7 +69,17 @@ export default function Router() {
         name="PesananSaya"
         component={PesananSaya}
         options={{headerShown: false}}
-    />
+      />
+      <Stack.Screen
+        name="Rincian"
+        component={Rincian}
+        options={{headerShown: false}}
+      />
+			<Stack.Screen
+        name="Pesanan"
+        component={Pesanan}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

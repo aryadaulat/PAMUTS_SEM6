@@ -13,6 +13,9 @@ import React, {Component} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from 'react-native-date-picker'
 import {kapal} from '../../Asset';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment'
+import 'moment/locale/id'
 
 export default class Beranda extends Component {
   constructor(props) {
@@ -27,7 +30,9 @@ export default class Beranda extends Component {
 			pawal:'Pelabuhan Awal',
 			layanan:'Pilih Layanan',
 			date:new Date(),
+			time:new Date(),
 			open:false,
+			opentime:false,
     };
   }
   onChangeText = (namaState, value) => {
@@ -50,6 +55,32 @@ export default class Beranda extends Component {
 	setDate = perintah=>{
 		console.log(perintah)
 		this.setState({date:perintah})
+	}
+	setOpenTime = perintah=>{
+		this.setState({opentime:perintah})
+	}
+	setTime = perintah=>{
+		console.log(perintah)
+		this.setState({time:perintah})
+	}
+	submitdata= async()=>{
+		const data = {
+			pelwal:this.state.pawal,
+			pejan:this.state.pajan,
+			layanan:this.state.layanan,
+			tanggal:moment(this.state.date).format('LL'),
+			waktu:moment(this.state.time).format('LT'),
+		}
+		try {
+			console.log(data)
+		const jsonValue = JSON.stringify(data)
+		console.log(jsonValue)
+		await AsyncStorage.setItem('datapesanan', jsonValue)
+		this.props.navigation.navigate('Rincian')
+		}catch (e){
+			console.log(e)
+			
+		}
 	}
   render() {
     const {modalVisible} = this.state;
@@ -253,7 +284,7 @@ export default class Beranda extends Component {
 								this.setDate(date)
 							}}
 							onCancel={() => {
-								setOpen(false)
+								this.setOpen(false)
 							}}
 						/>
           <TouchableOpacity
@@ -266,7 +297,7 @@ export default class Beranda extends Component {
             }}
 						onPress={() => this.setOpen(true)}
 						>
-            <Text style={{color: 'black'}}>mode</Text>
+            <Text style={{color: 'black'}}>{moment(this.state.date).format('LL')}</Text>
           </TouchableOpacity>
         </View>
         <View style={{marginLeft: 15, marginTop: 25}}>
@@ -274,14 +305,31 @@ export default class Beranda extends Component {
         </View>
         <View style={{flexDirection: 'row', marginLeft: 15}}>
           <Image source={kapal} style={{height: 35, width: 35}} />
-          <TextInput
-            placeholder="PILIH"
-            style={styles.TextInput}
-            value={this.state.nama}
-            onChangeText={text => this.onChangeText('nama', text)}
-            color="black"
-            placeholderTextColor="black"
-          />
+          <DatePicker
+							modal
+							open={this.state.opentime}
+							mode='time'
+							date={this.state.time}
+							onConfirm={(date) => {
+								this.setOpenTime(false)
+								this.setTime(date)
+							}}
+							onCancel={() => {
+								this.setOpenTime(false)
+							}}
+						/>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'lightgray',
+              width: 230,
+              marginLeft: 15,
+              paddingLeft: 15,
+              justifyContent: 'center',
+            }}
+						onPress={() => this.setOpenTime(true)}
+						>
+            <Text style={{color: 'black'}}>{moment(this.state.time).format('LT')}</Text>
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -289,6 +337,7 @@ export default class Beranda extends Component {
             backgroundColor: 'lightgray',
             marginHorizontal: 20,
             marginTop: 25,
+						marginBottom:20,
           }}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color: 'black'}}>Dewasa</Text>
@@ -301,7 +350,9 @@ export default class Beranda extends Component {
             backgroundColor: 'orange',
             marginHorizontal: 50,
             borderRadius: 15,
-          }}>
+          }}
+					onPress={() => this.submitdata()}
+					>
           <Text>Buat Tiket</Text>
         </TouchableOpacity>
       </View>
