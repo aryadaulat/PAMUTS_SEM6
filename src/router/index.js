@@ -10,6 +10,7 @@ import {
   Rincian,
   Pesanan,
 } from '../Page';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createNativeStackNavigator();
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -22,22 +23,42 @@ function MyTabs() {
       <Tab.Screen
         name="Beranda"
         component={Beranda}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+					tabBarLabel: 'Beranda',
+					tabBarIcon: ({ color, size }) => (
+						<MaterialCommunityIcons name="home" color={color} size={size} />
+					),
+				}}
       />
       <Tab.Screen
         name="PesananSaya"
         component={PesananSaya}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+					tabBarLabel: 'PesananSaya',
+					tabBarIcon: ({ color, size }) => (
+						<MaterialCommunityIcons name="home" color={color} size={size} />
+					),
+				}}
       />
       <Tab.Screen
         name="Pembatalan"
         component={Pembatalan}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+					tabBarLabel: 'Pembatalan',
+					tabBarIcon: ({ color, size }) => (
+						<MaterialCommunityIcons name="home" color={color} size={size} />
+					),
+				}}
       />
       <Tab.Screen
         name="Lainnya"
         component={Lainnya}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+					tabBarLabel: 'Lainnya',
+					tabBarIcon: ({ color, size }) => (
+						<MaterialCommunityIcons name="home" color={color} size={size} />
+					),
+				}}
       />
     </Tab.Navigator>
   );
